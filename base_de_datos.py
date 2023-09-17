@@ -1,6 +1,6 @@
 import openpyxl
 from openpyxl import Workbook
-from categoria import Categoria
+from Categoria import Categoria
 from Autor import Autor
 from Libro import Libro
 class BaseDeDatos:
