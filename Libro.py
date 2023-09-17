@@ -63,5 +63,8 @@ class Libro(Autor):
             {'codigo_libro': self.codigo_libro, 'titulo': self.titulo, 'aho': self.aho, 'tomo': self.tomo}
         ]
 
-        bd= BaseDeDatos('base.xls')
+        bd= AutorNegocio('base.xls')
         bd.guardar_libros(libros_a_guardar)
+
+
+    def generar_codigo_libro(self)
