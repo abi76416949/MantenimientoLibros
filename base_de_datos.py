@@ -54,11 +54,17 @@ class BaseDeDatos:
 
     # -----------------GUARDAR CATEGORIAS--------------------------------------
     def guardar_categorias(self, categorias):
-        libro = Workbook()
-        hoja = libro.active
-        hoja.append(['cod_categoria', 'categoria'])
+        libro, hoja = self._abrir_archivo()
+        if hoja is None:
+            libro = Workbook()
+            hoja = libro.active
+            hoja.append(['cod_categoria', 'categoria'])
+
         for categoria in categorias:
-            hoja.append([categoria.cod_categoria, categoria.categoria])
+            #Genera el codigo aleatorio de categoria antes de guardar el archivo
+            codigo_categoria = categoria.generar_codigo_categoria()
+            hoja.append([codigo_categoria, categoria.categoria])
+
         libro.save(self.archivo)
 
     # --------------------------OBTENER PERSONAS----------------------------------------------------
@@ -72,7 +78,7 @@ class BaseDeDatos:
         for row in hoja.iter_row(values_only=True):
             if row[0] != 'cod_persona':
                 datos.append({'cod_persona': row[0], 'nombre': row[1], 'apellidoPaterno': row[2],
-                              'apellidoMaterno': row[3], 'fecha_nacimieto': row[4]})
+                            'apellidoMaterno': row[3], 'fecha_nacimieto': row[4]})
         libro.close()
         return datos
 
@@ -81,10 +87,10 @@ class BaseDeDatos:
         libro = Workbook()
         hoja = libro.active
         hoja.append(['cod_persona', 'nombre', 'apellidoPaterno',
-                     'apellidoMaterno', 'fecha_nacimieto'])
+                    'apellidoMaterno', 'fecha_nacimieto'])
         for persona in personas:
             hoja.append([persona.cod_persona, persona.nombre, persona.apellidoPaterno,
-                         persona.apellidoMaterno, persona.fecha_nacimieto])
+                        persona.apellidoMaterno, persona.fecha_nacimieto])
         libro.save(self.archivo)
    #---------- AAGREGAR CATEGORIAS--------------------------------------
     def agregar_categorias(self):
