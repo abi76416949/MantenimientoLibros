@@ -1,4 +1,7 @@
 from Autor import Autor
+from negocio_autor import AutorNegocio
+
+
 
 class Libro(Autor):
     codigo_libro = ''
@@ -13,6 +16,8 @@ class Libro(Autor):
         self.tomo = tomo
         self.autor = None  # Atributo para almacenar al autor asignado
 
+
+    #-----------AGREGAR SET Y GETTERS--------------------------------------------------------
     def set_codigo_libro(self, codigo_libro):
         self.codigo_libro = codigo_libro
 
@@ -45,3 +50,18 @@ class Libro(Autor):
     
     def reporte(self):
         return f"Reporte del curso {self.titulo}\nCodigo del libro: {self.get_codigo_libro}\nAño: {self.year}\nTomo: {self.tomo}"
+    #------------------AGREGAR_LIBRO--------------------------------------------
+
+    def agregar_libro(self):
+        self.codigo_libro=print("agrega el codi del libro")
+        self.titulo=print("agrega el titulo del libro")
+        self.aho=print("agrega el año del libro")
+        self.tomo=print("agrega el tomo del libro")
+
+       
+        libros_a_guardar = [
+            {'codigo_libro': self.codigo_libro, 'titulo': self.titulo, 'aho': self.aho, 'tomo': self.tomo}
+        ]
+
+        bd= BaseDeDatos('base.xls')
+        bd.guardar_libros(libros_a_guardar)
