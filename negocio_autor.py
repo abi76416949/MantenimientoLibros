@@ -2,13 +2,13 @@ import pandas as pd
 from Autor import Autor
 
 class AutorNegocio(Autor):
-    listado_docentes = []
+    listado_Autor = []
     registros_docentes = 'C:/Users/Elia/Desktop/PROGRAMACION/Python/CICLO 3/Herencia/listado_alumno/listado_docente.xlsx'
 
     def __init__(self):
         self.listado_docentes = []
 
-    def obtener_docentes(self):
+    def obtener_autor(self):
         df = pd.read_excel(self.registros_docentes)
         listado_docentes = []
         for index, row in df.iterrows():
