@@ -1,6 +1,8 @@
+import random
+import string
 from Libro import Libro
 
-class Categoria(Libro):
+class Categoria():
     cod_categoria = ''
     categoria = ''
 
@@ -13,6 +15,12 @@ class Categoria(Libro):
 
     def get_cod_categoria(self):
         return self.cod_categoria
+    
+    def generar_codigo_categoria(self, length=3):
+        # Genera un código aleatorio de números
+        characters = string.digits
+        codigo_categoria = ''.join(random.choice(characters) for _ in range(length))
+        self.cod_categoria = codigo_categoria
     
     def asignar_libro(self, libro):
         self.libro = libro

@@ -8,8 +8,8 @@ classDiagram
     note "Codigo en proceso"
 
 
-    Autor <-- Libro : asociacion
-    Libro <-- Categoria : asociacion
+    Persona <-- Libro : asociacion
+    Persona <-- Categoria : asociacion
     note for Libro "can fly\ncan swim\ncan dive\ncan help in debugging"
     Persona <|-- Autor : herencia
     
@@ -25,20 +25,19 @@ classDiagram
         +String beakColor
         +swim()
         +quack()
-        +agregarLibro()
-        +eliminarLIbro()
-        +modificarLibros()
     }
     class Autor{
         +string cod_autor
         +string pais
         +string editorial
-        +reconociomientoAutor()
-
     }
     class Categoria{
         +string cod_categoria
         +string categoria
+    }
+    Main{
+        registrar()
+        
     }
 
 ```
