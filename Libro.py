@@ -53,7 +53,7 @@ class Libro(Autor):
         return f"Reporte del curso {self.titulo}\nCodigo del libro: {self.get_codigo_libro}\nAño: {self.year}\nTomo: {self.tomo}"
     #------------------AGREGAR_LIBRO--------------------------------------------
 
-    def agregar_libro(self):
+    def agregar_libro(self, ):
         self.codigo_libro=input(print("agrega el codi del libro"))
         self.titulo=input(print("agrega el titulo del libro"))
         self.aho=input(print("agrega el año del libro"))
@@ -67,6 +67,7 @@ class Libro(Autor):
         bd= BaseDeDatos('base.xls')
         bd.guardar_libros(libros_a_guardar)
 
+    def eliminar_libro(self):
 
     def generar_codigo_libro(self):
         self.codigo_libro = print("genera el codigo del libro")
