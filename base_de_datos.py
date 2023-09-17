@@ -56,7 +56,6 @@ class BaseDeDatos:
     def guardar_categorias(self, categorias):
         libro, hoja = self._abrir_archivo()
         if hoja is None:
-            # Si la hoja no existe, crea una nueva hoja
             libro = Workbook()
             hoja = libro.active
             hoja.append(['cod_categoria', 'categoria'])
