@@ -1,5 +1,6 @@
 from Autor import Autor
-from negocio_autor import AutorNegocio
+
+from base_de_datos import BaseDeDatos
 
 
 
@@ -9,11 +10,11 @@ class Libro(Autor):
     year = ''
     tomo = ''
 
-    def __init__(self, codigo_libro, titulo, year, tomo):
-        self.codigo_libro = codigo_libro
-        self.titulo = titulo
-        self.year = year
-        self.tomo = tomo
+    def __init__(self):
+        self.codigo_libro = ''
+        self.titulo = ''
+        self.year = ''
+        self.tomo = ''
         self.autor = None  # Atributo para almacenar al autor asignado
 
 
@@ -53,18 +54,24 @@ class Libro(Autor):
     #------------------AGREGAR_LIBRO--------------------------------------------
 
     def agregar_libro(self):
-        self.codigo_libro=print("agrega el codi del libro")
-        self.titulo=print("agrega el titulo del libro")
-        self.aho=print("agrega el año del libro")
-        self.tomo=print("agrega el tomo del libro")
+        self.codigo_libro=input(print("agrega el codi del libro"))
+        self.titulo=input(print("agrega el titulo del libro"))
+        self.aho=input(print("agrega el año del libro"))
+        self.tomo=input(print("agrega el tomo del libro"))
 
        
         libros_a_guardar = [
             {'codigo_libro': self.codigo_libro, 'titulo': self.titulo, 'aho': self.aho, 'tomo': self.tomo}
         ]
 
-        bd= AutorNegocio('base.xls')
+        bd= BaseDeDatos('base.xls')
         bd.guardar_libros(libros_a_guardar)
 
 
-    def generar_codigo_libro(self)
+    def generar_codigo_libro(self):
+        self.codigo_libro = print("genera el codigo del libro")
+        return self.codigo_libro
+    
+lib = Libro()
+
+lib.agregar_libro()
