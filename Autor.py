@@ -35,4 +35,4 @@ class Autor(Persona):
         codigo = self.cod_autor
         pais = self.pais
         editorial = self.editorial
-        return f'Datos del docente es : {per_data}, Codigo de ingreso: {codigo}, Pais: {pais}, Editorial: {editorial}'
+        return f'Datos del autor es : {per_data}, Codigo de ingreso: {codigo}, Pais: {pais}, Editorial: {editorial}'

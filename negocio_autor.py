@@ -10,11 +10,11 @@ class AutorNegocio(Autor):
 
     def obtener_autor(self):
         df = pd.read_excel(self.registros_docentes)
-        listado_docentes = []
+        listado_autores = []
         for index, row in df.iterrows():
             docente = Autor(row['Nombre'], row['Apellido_Paterno'], row['Apellido_Materno'], row['DNI'], row['Codigo'], row['Facultad'])
-            listado_docentes.append(docente)
-        return listado_docentes
+            listado_autores.append(docente)
+        return listado_autores
 
     def registrar_docente(self, nombre, ap_paterno, ap_materno, dni, codigo, facultad):
         self.listado_docentes = self.obtener_docentes()
