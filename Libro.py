@@ -53,7 +53,7 @@ class Libro(Autor):
         return f"Reporte del curso {self.titulo}\nCodigo del libro: {self.get_codigo_libro}\nAño: {self.year}\nTomo: {self.tomo}"
     #------------------AGREGAR_LIBRO--------------------------------------------
 
-    def agregar_libro(self,cod_libroo, titulo, aho, tomo ):
+    def agregar_libro(self,cod_libroo, titulo, year, tomo ):
         cod_libroo= self.codigo_libro
         titulo=self.titulo
         year=self.aho
