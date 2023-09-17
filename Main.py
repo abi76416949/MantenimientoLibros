@@ -7,14 +7,16 @@ negocio_autor = AutorNegocio()
 
 def registrar_libro():
     titulo = input('Ingrese titulo: ')
-
+    year = input('Ingrese año: ')
+    tomo = input('Ingrese tomo: ')
     nombre = input('Ingrese nombre: ')
     ap_paterno = input('Ingrese ap_paterno: ')
     ap_materno = input('Ingrese ap_materno: ')
-    dni = input('Ingrese dni: ')
-    codigo = input('Ingrese codigo: ')
-    facultad = input('Ingrese facultad: ')
-    negocio_autor.registrar_docente(nombre, ap_paterno, ap_materno, dni, codigo, facultad)
+    fecha_nacimiento = input('Ingrese fecha_nacimiento: ')
+    pais = input('Ingrese pais: ')
+    editorial = input('Ingrese editorial: ')
+    categoria = input('Ingrese categoria: ')
+    negocio_autor.registrar_docente(titulo, year, tomo, nombre, ap_paterno, ap_materno, fecha_nacimiento, pais, editorial, categoria)
     negocio_autor.guardar_docentes()
     print(f'Registro exitoso del docente')
 
@@ -34,8 +36,8 @@ def editar_docente():
     print(docente_negocio.editar_docente(indice, nombre, ap_paterno, ap_materno, dni, codigo, facultad))
 
 opciones = {
-    "1": registrar_docentes,
-    "2": obtener_docentes,
+    "1": registrar_libro,
+    "2": obtener_libros,
     "3": editar_docente,
     "4": exit
 }
