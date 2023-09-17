@@ -8,6 +8,7 @@ class Categoria(Libro):
 
     def __init__(self, cod_categoria, categoria):
         self.cod_categoria = cod_categoria
+        self.categoria = categoria
     
     def generar_codigo_categoria(self, length=3):
         # Genera un código aleatorio de números
@@ -20,7 +21,7 @@ class Categoria(Libro):
     
     def set_cod_categoria(self, cod_categoria):
         self.cod_categoria = cod_categoria
-        
+
     def asignar_libro(self, libro):
         self.libro = libro
     
