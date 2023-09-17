@@ -2,7 +2,7 @@ import random
 import string
 from Libro import Libro
 
-class Categoria(Libro):
+class Categoria():
     cod_categoria = ''
     categoria = ''
 
@@ -25,7 +25,7 @@ class Categoria(Libro):
     def asignar_libro(self, libro):
         self.libro = libro
     
-    def mostrar_libro(self):
+    def obtener_libro(self):
         return self.libro
     
     def reporte(self):

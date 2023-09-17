@@ -61,7 +61,7 @@ class Libro(Autor):
 
        
         libros_a_guardar = [
-            {'codigo_libro': self.codigo_libro, 'titulo': self.titulo, 'aho': self.aho, 'tomo': self.tomo}
+            {'codigo_libro': self.codigo_libro, 'titulo': self.titulo, 'aho': self.year, 'tomo': self.tomo}
         ]
 
         bd= BaseDeDatos('base.xls')
@@ -71,6 +71,8 @@ class Libro(Autor):
     def generar_codigo_libro(self):
         self.codigo_libro = print("genera el codigo del libro")
         return self.codigo_libro
+    
+
     
 lib = Libro()
 
