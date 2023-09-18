@@ -6,7 +6,7 @@ class Autor(Persona):
     editorial = ''
     
     #Definimos el constructor
-    def __init__(self, nombre, ap_paterno, ap_materno, codigo, pais, editorial):
+    def __init__(self, codigo, nombre, ap_paterno, ap_materno, pais, editorial):
         super().__init__(nombre, ap_paterno, ap_materno)
         self.cod_autor = codigo
         self.pais = pais
