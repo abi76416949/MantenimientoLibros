@@ -2,18 +2,21 @@ from Mantenimiento import Mantenimiento
 from openpyxl import Workbook
 from base_de_datos import BaseDeDatos
 
-_libro = Mantenimiento()
+# Crear una instancia de Mantenimiento
+Mantenimiento = Mantenimiento()
 
+# Función para registrar un libro
 def registrar_libro():
-    cod_libro = input('Ingrese código del libro: ')
-    titulo = input('Ingrese título del libro: ')
-    year = input('Ingrese año del libro: ')
-    tomo = input('Ingrese tomo del libro: ')
-    _libro.agregar_libro(cod_libro, titulo, year, tomo)
-    print(f'Registro exitoso del libro')
+    print("Registro de un nuevo libro:")
+    codigo_libro = Mantenimiento.generar_codigo_libro()
+    titulo = input("Ingrese el título del libro: ")
+    year = input("Ingrese el año de publicación: ")
+    tomo = input("Ingrese el número de tomo: ")
+    Mantenimiento.agregar_libro(codigo_libro, titulo, year, tomo)
+    print(f'Registro exitoso del libro con código {codigo_libro}')
 
 def obtener_libros():
-    listado_libros = _libro.obtener_libros()
+    listado_libros = Mantenimiento.obtener_libros()
     for libro in listado_libros:
         print(f'Código: {libro["codigo_libro"]}, Título: {libro["titulo"]}, Año: {libro["aho"]}, Tomo: {libro["tomo"]}')
 
@@ -23,14 +26,14 @@ def editar_libro():
     nuevo_ano = input('Ingrese el nuevo año del libro: ')
     nuevo_tomo = input('Ingrese el nuevo tomo del libro: ')
     
-    if _libro.editar_libro(codigo_libro, nuevo_titulo, nuevo_ano, nuevo_tomo):
+    if Mantenimiento.editar_libro(codigo_libro, nuevo_titulo, nuevo_ano, nuevo_tomo):
         print(f'Libro con código {codigo_libro} editado correctamente.')
     else:
         print(f'No se encontró un libro con código {codigo_libro}.')
 
 def eliminar_libro():
     codigo_libro = input('Ingrese el código del libro a eliminar: ')
-    if _libro.eliminar_libro(codigo_libro):
+    if Mantenimiento.eliminar_libro(codigo_libro):
         print(f'Libro con código {codigo_libro} eliminado correctamente.')
     else:
         print(f'No se encontró un libro con código {codigo_libro}.')
