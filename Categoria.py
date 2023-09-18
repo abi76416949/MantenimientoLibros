@@ -25,7 +25,7 @@ class Categoria():
         self.libro = libro
     
     def obtener_libro(self):
-        return self.libro
+        return +self.libro
     
     def reporte(self):
         return f"Reporte del libro: {self.libro}\nCodigo: {self.cod_categoria}"

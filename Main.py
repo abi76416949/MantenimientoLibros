@@ -1,9 +1,9 @@
-from negocio_autor import AutorNegocio
+from _libro import Mantenimiento
 from Libro import Libro
 import pandas as pd
 from openpyxl import Workbook
 
-negocio_autor = AutorNegocio()
+negocio_autor = Mantenimiento()
 
 def registrar_libro():
     titulo = input('Ingrese titulo: ')
@@ -20,29 +20,25 @@ def registrar_libro():
     negocio_autor.guardar_docentes()
     print(f'Registro exitoso del docente')
 
-def obtener_libro():
-    listado_autor = negocio_autor.obtener_autor()
-    for docente in listado_autor:
+def obtener_docentes():
+    listado_docentes = docente_negocio.obtener_docentes()
+    for docente in listado_docentes:
         print(docente.imprimir())
 
-def editar_libro():
+def editar_docente():
     indice = int(input('Ingrese el índice del docente a editar: '))
-    titulo = input('Ingrese titulo: ')
-    year = input('Ingrese año: ')
-    tomo = input('Ingrese tomo: ')
     nombre = input('Ingrese nombre: ')
     ap_paterno = input('Ingrese ap_paterno: ')
     ap_materno = input('Ingrese ap_materno: ')
-    fecha_nacimiento = input('Ingrese fecha_nacimiento: ')
-    pais = input('Ingrese pais: ')
-    editorial = input('Ingrese editorial: ')
-    categoria = input('Ingrese categoria: ')
-    print(negocio_autor.editar_docente(indice, titulo, year, tomo, nombre, ap_paterno, ap_materno, fecha_nacimiento, pais, editorial, categoria))
+    dni = input('Ingrese dni: ')
+    codigo = input('Ingrese codigo: ')
+    facultad = input('Ingrese facultad: ')
+    print(docente_negocio.editar_docente(indice, nombre, ap_paterno, ap_materno, dni, codigo, facultad))
 
 opciones = {
     "1": registrar_libro,
-    "2": obtener_libro,
-    "3": editar_libro,
+    "2": obtener_libros,
+    "3": editar_docente,
     "4": exit
 }
 
