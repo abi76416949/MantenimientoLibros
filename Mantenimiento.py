@@ -4,7 +4,7 @@ class Mantenimiento():
 
     def __init__(self):
         self.libro_counter = 1
-        self.libro_categoria_counter ='1'
+        self.libro_categoria_counter =1
         self.autor_counter = 1
         self.libros_eliminados=[]
         self.autores_eliminados= []
@@ -22,6 +22,7 @@ class Mantenimiento():
         codigo_categoria = f'C{self.libro_categoria_counter: 04}'
         self.libro_categoria_counter += 1
         return codigo_categoria
+    
     def generar_codigo_autor(self):
         #generamos un codigo de autor único asegurandonos que no se repita
         codigo_autor = f'A{self.autor_counter: 04}'
@@ -31,6 +32,7 @@ class Mantenimiento():
 #------------------AGREGAR_LIBRO--------------------------------------------
 
     def agregar_libro(self, cod_libro, titulo, year, tomo):
+        cod_libro=self.generar_codigo_libro(cod_libro)
         # Crear un diccionario con los datos del libro
         libro_nuevo = {'codigo_libro': cod_libro,
                         'titulo': titulo,
@@ -38,7 +40,7 @@ class Mantenimiento():
                         'tomo': tomo}
 
         # Crear una instancia de la base de datos
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
 
         # Llamar al método de la base de datos para guardar el libro
         bd.guardar_libros([libro_nuevo])
@@ -54,7 +56,7 @@ class Mantenimiento():
         
     #-------------------EDITAR LIBROS------------------------------
     def editar_libro(self, codigo_libro, nuevo_titulo, nuevo_ano, nuevo_tomo):
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
         return bd.editar_libro(codigo_libro, nuevo_titulo, nuevo_ano, nuevo_tomo)
 
     def generar_codigo_libro(self):
@@ -63,12 +65,12 @@ class Mantenimiento():
     #---------------OBTENER LIBROS -------------------------------------------------
 
     def obtener_libros(self):
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
         return bd.obtener_libros()
     
     #-----------------BUSCAR LIBROS-----------------------------------------------------------
     def buscar_libro(self, codigo_libro):
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
         return bd.buscar_libro(codigo_libro)
     
     ################################AUTOR#####################################
@@ -78,12 +80,12 @@ class Mantenimiento():
             {'codigo_autor': codigo_autor, 'nombre': nombre, 'apellido': apellido}
         ]
 
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
         bd.guardar_autores(autores_a_guardar)
 
     #.....................ASIGNAR UN AUTOR A LIBRO..............................}
     def asignar_autor_a_libro(self, codigo_libro, codigo_autor):
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
         bd.asignar_autor_a_libro(codigo_libro, codigo_autor)
 
 
@@ -91,16 +93,16 @@ class Mantenimiento():
     
     #---------------------OBTENER AUTORES----------------------------
     def obtener_autores(self):
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
         return bd.obtener_autores()
     #------------------ELIMINAR AUTORES------------------------------
     def eliminar_autor(self, codigo_autor):
-        self.autores_eliminados(codigo_autor)
-        bd = BaseDeDatos('base.xls')
+        self.autores_eliminados.append(codigo_autor)
+        bd = BaseDeDatos('base.xlsx')
         return bd.eliminar_autor(codigo_autor)
     #------------------EDITAR AUTORES------------------------------
     def editar_autor(self, codigo_autor, nuevo_nombre, nuevo_apellido):
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
         return bd.editar_autor(codigo_autor, nuevo_nombre, nuevo_apellido)
 
 
@@ -117,13 +119,13 @@ class Mantenimiento():
             {'codigo_categoria': codigo_categoria, 'categoria': categoria}
         ]
 
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
         bd.guardar_categorias(categorias_a_guardar)
     #------------------Asignar_categoria_a_libro------------------
     def asignar_categoria_a_libro(self, codigo_libro, codigo_categoria):
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
         bd.asignar_categoria_a_libro(codigo_libro, codigo_categoria)
     #---------------------OBTENER CATEGORIAS----------------------------
     def obtener_categorias(self):
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
         return bd.obtener_categorias()
