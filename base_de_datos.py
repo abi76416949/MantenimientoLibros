@@ -4,6 +4,7 @@ from openpyxl import Workbook
 class BaseDeDatos:
     def __init__(self, archivo):
         self.archivo = archivo
+    
 
     #---------------------ABRIR LIBROS--------------------------------
     def _abrir_archivo(self):
@@ -92,12 +93,7 @@ class BaseDeDatos:
             hoja.append([persona.cod_persona, persona.nombre, persona.apellidoPaterno,
                         persona.apellidoMaterno, persona.fecha_nacimieto])
         libro.save(self.archivo)
-    #---------- AAGREGAR CATEGORIAS--------------------------------------
-    def agregar_categorias(self):
-        self.cod_categoria = input(print("agrega el codi de la categoria"))
-        self.categoria = input(print("agrega el nombre de la categoria"))
-        
-
+    
 
     #-----------ELIMINAR LIBROS-------------------------------------------
     def eliminar_libro(self, codigo_libro):
