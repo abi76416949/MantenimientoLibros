@@ -93,8 +93,12 @@ class BaseDeDatos:
             hoja.append([persona.cod_persona, persona.nombre, persona.apellidoPaterno,
                         persona.apellidoMaterno, persona.fecha_nacimieto])
         libro.save(self.archivo)
+<<<<<<< HEAD
 
    #---------- AAGREGAR CATEGORIAS--------------------------------------
+=======
+    #---------- AAGREGAR CATEGORIAS--------------------------------------
+>>>>>>> ff584c06970fca80943757f8d0ffe6a070fa1009
     def agregar_categorias(self):
         self.cod_categoria = input(print("agrega el codi de la categoria"))
         self.categoria = input(print("agrega el nombre de la categoria"))

@@ -1,6 +1,5 @@
 import random
 import string
-from Libro import Libro
 
 class Categoria():
     cod_categoria = ''
