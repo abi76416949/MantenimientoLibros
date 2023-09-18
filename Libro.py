@@ -1,7 +1,5 @@
 from Autor import Autor
 
-
-
 class Libro(Autor):
     codigo_libro = ''
     titulo = ''
@@ -49,4 +47,3 @@ class Libro(Autor):
     
     def reporte(self):
         return f"Reporte del curso {self.titulo}\nCodigo del libro: {self.get_codigo_libro}\nAño: {self.year}\nTomo: {self.tomo}"
-  

@@ -1,6 +1,7 @@
+# interfaz.py
 import tkinter as tk
 from tkinter import ttk
-from base_de_datos import BaseDeDatos
+from Mantenimiento import Mantenimiento
 
 class InterfazLibros:
     def __init__(self, root):
@@ -39,7 +40,7 @@ class InterfazLibros:
         self.editar_button = ttk.Button(root, text="Editar Libro", command=self.editar_libro)
         self.editar_button.pack()
 
-        self.obtener_button = ttk.Button(root, text="Obtener Libros", command=self.obtener_libros)
+        self.obtener_button = ttk.Button(root, text="Listar Libros", command=self.listar_libros)
         self.obtener_button.pack()
 
         self.buscar_button = ttk.Button(root, text="Buscar Libro", command=self.buscar_libro)
@@ -50,7 +51,7 @@ class InterfazLibros:
         self.status_label.pack()
 
         # Instancia a base de datos
-        self.bd = BaseDeDatos('base.xls')
+        self.negocio_libro = Mantenimiento()
 
     def limpiar_controles(self):
         self.codigo_entry.delete(0, tk.END)
@@ -59,19 +60,18 @@ class InterfazLibros:
         self.tomo_entry.delete(0, tk.END)
 
     def guardar_libro(self):
-        codigo = self.codigo_entry.get()
+        cod_libro = self.codigo_entry.get()
         titulo = self.titulo_entry.get()
         year = self.year_entry.get()
         tomo = self.tomo_entry.get()
 
-        self.bd.agregar_libro(codigo, titulo, year, tomo)
-
+        self.negocio_libro.agregar_libro(cod_libro, titulo, year, tomo)
         self.limpiar_controles()
         self.status_label.config(text="Libro registrado exitosamente.")
 
     def eliminar_libro(self):
-        codigo = self.codigo_entry.get()
-        if self.bd.eliminar_libro(codigo):
+        cod_libro = self.codigo_entry.get()
+        if self.negocio_libro.eliminar_libro(cod_libro):
             self.limpiar_controles()
             self.status_label.config(text="Libro eliminado correctamente.")
         else:
@@ -79,31 +79,33 @@ class InterfazLibros:
             self.status_label.config(text="Libro no encontrado.")
 
     def editar_libro(self):
-        codigo = self.codigo_entry.get()
-        titulo = self.titulo_entry.get()
-        year = self.year_entry.get()
-        tomo = self.tomo_entry.get()
+        codigo_libro = self.codigo_entry.get()
+        nuevo_titulo = self.titulo_entry.get()
+        nuevo_ano = self.year_entry.get()
+        nuevo_tomo = self.tomo_entry.get()
 
-        if self.bd.editar_libro(codigo, titulo, year, tomo):
+        if self.negocio_libro.editar_libro(codigo_libro, nuevo_titulo, nuevo_ano, nuevo_tomo):
             self.limpiar_controles()
             self.status_label.config(text="Libro editado correctamente.")
         else:
             self.limpiar_controles()
             self.status_label.config(text="Libro no encontrado.")
 
-    def obtener_libros(self):
-        libros = self.bd.obtener_libros()
+    def listar_libros(self):
+        listado_libros = self.negocio_libro.obtener_libros()
         self.limpiar_controles()
         self.status_label.config(text="Listado de Libros:")
-        for libro in libros:
-            self.status_label.config(text=self.status_label.cget("text") + f"\nCódigo: {libro['codigo_libro']}, Título: {libro['titulo']}, Año: {libro['aho']}, Tomo: {libro['tomo']}")
+        for libro in listado_libros:
+            self.status_label.config(
+                text=self.status_label.cget("text") + f"\nCódigo: {libro['codigo_libro']}, Título: {libro['titulo']}, Año: {libro['aho']}, Tomo: {libro['tomo']}")
 
     def buscar_libro(self):
-        codigo = self.codigo_entry.get()
-        libro = self.bd.buscar_libro(codigo)
+        codigo_libro = self.codigo_entry.get()
+        libro = self.negocio_libro.buscar_libro(codigo_libro)
         self.limpiar_controles()
         if libro:
-            self.status_label.config(text=f"Código: {libro['codigo_libro']}, Título: {libro['titulo']}, Año: {libro['aho']}, Tomo: {libro['tomo']}")
+            self.status_label.config(
+                text=f"Código: {libro['codigo_libro']}, Título: {libro['titulo']}, Año: {libro['aho']}, Tomo: {libro['tomo']}")
         else:
             self.status_label.config(text="Libro no encontrado.")
 
