@@ -54,20 +54,43 @@ class Libro(Autor):
     #------------------AGREGAR_LIBRO--------------------------------------------
 
     def agregar_libro(self,cod_libroo, titulo, year, tomo ):
-        cod_libroo= self.codigo_libro
-        titulo=self.titulo
-        year=self.aho
-        tomo =self.tomo
-
-       
         libros_a_guardar = [
-            {'codigo_libro': cod_libroo, 'titulo': titulo, 'aho': year, 'tomo': tomo}
+            {'codigo_libro': cod_libroo, 
+             'titulo': titulo,
+             'aho': year, 
+             'tomo': tomo}
         ]
 
         bd= BaseDeDatos('base.xls')
         bd.guardar_libros(libros_a_guardar)
 
-    def eliminar_libro(self):
+    def eliminar_libro(self, codigo_libro):
+        bd= BaseDeDatos
+        libro, hoja = bd._abrir_archivo()
+
+            # Buscar la fila correspondiente al libro a eliminar
+        fila_a_eliminar = None
+        for row in hoja.iter_rows(values_only=True):
+            if row[0] == codigo_libro:
+                fila_a_eliminar = row
+                break
+
+        if fila_a_eliminar:
+            hoja.delete_rows(hoja.index(fila_a_eliminar[0]))
+
+                # Guardar los cambios en el archivo
+            libro.save(self.archivo)
+            libro.close()
+
+            return True  # Libro encontrado y eliminado
+        else:
+            libro.close()
+            return False  # Libro no encontrado
+        
+        
+    #-------------------EDITAR LIBROS------------------------------
+
+
 
     def generar_codigo_libro(self):
         self.codigo_libro = print("genera el codigo del libro")

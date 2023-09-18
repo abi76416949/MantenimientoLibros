@@ -96,7 +96,46 @@ class BaseDeDatos:
     def agregar_categorias(self):
         self.cod_categoria = input(print("agrega el codi de la categoria"))
         self.categoria = input(print("agrega el nombre de la categoria"))
-
         
+
+
+    #-----------ELIMINAR LIBROS-------------------------------------------
+    def eliminar_libro(self, codigo_libro):
+        libro, hoja= self._abrir_archivo()
+        fila_a_eliminar = None
+        for row in hoja.iter_rows(values_only=True):
+            if row[0] == codigo_libro:
+                fila_a_eliminar = row
+                break
+
+        if fila_a_eliminar:
+            hoja.delete_rows(hoja.index(fila_a_eliminar[0]))
+
+                # Guardar los cambios en el archivo
+            libro.save(self.archivo)
+            libro.close()
+    #----------------Editar libro-------------------------------------------
+    def editar_libro(self, codigo_libro, nuevo_titulo, nuevo_ano, nuevo_tomo):
+        libro, hoja = self._abrir_archivo()
+        fila_a_editar = None
+
+        for row in hoja.iter_rows(values_only=True):
+            if row[0] == codigo_libro:
+                fila_a_editar = row
+                break
+
+        if fila_a_editar:
+            # Actualiza los valores del libro
+            fila_a_editar[1] = nuevo_titulo
+            fila_a_editar[2] = nuevo_ano
+            fila_a_editar[3] = nuevo_tomo
+
+            # Guarda los cambios en el archivo
+            libro.save(self.archivo)
+            libro.close()
+            return True  # Libro encontrado y editado
+        else:
+            libro.close()
+            return False  # Libro no encontrado
     def cerrar(self):
         pass
