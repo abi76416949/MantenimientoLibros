@@ -1,5 +1,4 @@
-from mantenimiento import Mantenimiento
-
+from Mantenimiento import Mantenimiento
 
 mt = Mantenimiento()
 
@@ -9,13 +8,17 @@ menu = {
     '3': 'Editar Libro',
     '4': 'Listar Libros',
     '5': 'Buscar Libro',
-    '6': 'Salir'
+    '6': 'Informe de Libros',
+    '7': 'Salir'
 }
 
 menuLibros = {
-    '1' :'Agregar categoria al libro ',
-    '2' :'Regresar al menú principal'
-
+    '1' :'Agregar categoria ',
+    '2' :'Eliminar categoria ',
+    '3' :'Editar categoria ',
+    '4' :'Listar categoria ',
+    '5' :'Buscar categoria ',
+    '6' :'Salir '
 }
 def menuLibro():
     while True:
@@ -54,13 +57,12 @@ def main():
             year = input("Ingrese el año del libro: ")
             tomo = input("Ingrese el tomo del libro: ")
             mt.agregar_libro(codigo_libro,titulo,year,tomo)
-            while True:
-                # Aquí ingresamos al submenú de libros
-                menuLibro()
-                subopcion = input("¿Desea realizar otra acción en libros? (S/N): ").strip().lower()
-                for opcion, descripcion in menuLibro.intems()
-                if subopcion != "s":
-                    break
+
+            categoria = input("Ingrese categoria del libro")
+            
+            codigo_categoria = str(mt.generar_codigo_categoria)
+            mt.agregar_categoria(codigo_categoria,categoria)
+
         elif opcion == "2":
             codigo_libro = input("Ingrese el código del libro a eliminar: ")
             mt.eliminar_libro(codigo_libro)
@@ -86,8 +88,12 @@ def main():
             libro = mt.buscar_libro(codigo_libro)
             print(f"Código: {libro['codigo_libro']}, Título: {libro['titulo']}, Año: {libro['aho']}, Tomo: {libro['tomo']}")
             
-
         elif opcion == "6":
+        #informe de libros
+            listado_libros = mt.obtener_libros()
+            mt.generar_informe_libros(listado_libros)
+        
+        elif opcion == "7":
             print("¡Hasta luego!")
             break
 

@@ -1,5 +1,6 @@
 from base_de_datos import BaseDeDatos
 import datetime
+import os 
 
 class Mantenimiento():
 
@@ -10,6 +11,12 @@ class Mantenimiento():
         self.libros_eliminados=[]
         self.autores_eliminados= []
         self.categorias_eliminadas = []
+        self.contador_archivo = "contador.txt"
+        if os.path.exists(self.contador_archivo):
+            with open(self.contador_archivo, "r") as archivo:
+                self.libro_counter = int(archivo.read())
+        else:
+            self.libro_counter = 1
         pass
     
 ######################GENERAR UN CODIGO ALEATORIO PARA LIBRO Y CATEGORIA####################
@@ -17,19 +24,28 @@ class Mantenimiento():
         #generamos un codigo de libro único asegurandonos que no se repita
         codigo_libro = f'L{self.libro_counter: 004}'
         self.libro_counter += 1
+        self.guardar_contador()  # Guardar el valor actual del contador en el archivo
+        
         print(codigo_libro)
         return codigo_libro 
+    
+    def guardar_contador(self):
+        # Guardar el valor actual del contador en el archivo
+        with open(self.contador_archivo, "w") as archivo:
+            archivo.write(str(self.libro_counter))
 
     def generar_codigo_categoria(self):
         #generamos un codigo de categoria único asegurandonos que no se repita
         codigo_categoria = f'C{self.libro_categoria_counter: 004}'
         self.libro_categoria_counter += 1
+        self.guardar_contador() 
         return codigo_categoria
     
     def generar_codigo_autor(self):
         #generamos un codigo de autor único asegurandonos que no se repita
         codigo_autor = f'A{self.autor_counter: 004}'
         self.autor_counter += 1
+        self.guardar_contador() 
         return codigo_autor
     
 #------------------AGREGAR_LIBRO--------------------------------------------
@@ -48,6 +64,7 @@ class Mantenimiento():
         # Llamar al método de la base de datos para guardar el libro
         bd.guardar_libros([libro_nuevo])
 
+    print("Libro agregado correctamente")
     #------------------ELIMINAR_LIBRO--------------------------------------------
     def eliminar_libro(self, codigo_libro):
         #guardamos los codigos de libros eliminados para una retulizacion de codigos
@@ -74,7 +91,7 @@ class Mantenimiento():
     
 #-----------------------GENERAR INFORME DE LIBROS-----------------------------------------
     def generar_informe_libros(self, libros):
-    # Obtener la fecha actual
+        # Obtener la fecha actual
         fecha_actual = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Crear el nombre del archivo de informe usando la fecha
@@ -97,7 +114,7 @@ class Mantenimiento():
 
         except Exception as e:
             print(f"Error al generar el informe: {str(e)}")
-    ################################AUTOR#####################################
+################################AUTOR#####################################
     def agregar_autor(self, codigo_autor, nombre, apellido):
         codigo_autor = self.generar_codigo_autor()
         autores_a_guardar = [
@@ -154,7 +171,9 @@ class Mantenimiento():
         bd = BaseDeDatos('base.xls')
         return bd.obtener_categorias()
 
-md = Mantenimiento()
-md.generar_codigo_libro()
-#agregar libro
-md.agregar_libro('L001', 'Python', '2020', '1')
+def main():
+    md = Mantenimiento()
+    md.agregar_libro('L0001', 'El señor de los anillos', 1954, 1)
+
+if __name__ == "__main__":
+    main()
