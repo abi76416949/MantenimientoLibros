@@ -34,11 +34,6 @@ classDiagram
     class Categoria{
         +string cod_categoria
         +string categoria
-        +string generarCodigocategoria()
-    }
-    Main{
-        registrar()
-        
     }
 
 ```

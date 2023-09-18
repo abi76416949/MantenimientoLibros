@@ -1,12 +1,76 @@
 import openpyxl
 from openpyxl import Workbook
+from libro import Libro
+from openpyxl.worksheet.worksheet import Worksheet
+
 from categoria import Categoria
-from Autor import Autor
-from Libro import Libro
+from autor import Autor
+
+
 class BaseDeDatos:
     def __init__(self, archivo):
         self.archivo = archivo
     
+    def _abrir_archivo():
+        
+        libro = openpyxl.Workbook()
+        hoja = libro.active
+        hoja.append(["Código Libro", "Título", "Año", "Tomo", "Código Autor", "Nombre Autor", "País", "Editorial", "codigo_categoria", "categoria"])
+
+
+
+
+    def agregar_libro(self, libro):
+        libroExcel = self._abrir_archivo()
+
+        if libroExcel is None:
+            libroExcel = Workbook()
+            hoja = libroExcel.active
+            hoja.append(["Código Libro", "Título", "Año", "Tomo", "Código Autor", "Nombre Autor", "País", "Editorial", "codigo_categoria", "categoria"])
+        else:
+            hoja = libroExcel.active
+
+        # Agregar los datos del libro
+        hoja.append([libro.codigo_libro, libro.titulo, libro.aho, libro.tomo, "", "", "", "", "", ""])
+        
+        libroExcel.save(self.archivo)
+        libroExcel.close()
+
+
+
+    def eliminar_libro(self, codigo_libro):
+        libroExcel = self._abrir_archivo()
+        if libroExcel is not None:
+            hoja = libroExcel.active
+            for row in hoja.iter_rows(min_row=2, values_only=True):
+                if row[0] == codigo_libro:
+                    hoja.delete_rows(row[0])
+                    libroExcel.save(self.archivo)
+                    libroExcel.close()
+                    return True
+        libroExcel.close()
+        return False
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     #---------------------ABRIR LIBROS--------------------------------
     def _abrir_archivo(self):
@@ -16,11 +80,14 @@ class BaseDeDatos:
         except FileNotFoundError:
             return None
         
+
+
+
+
     #---------------------------OBTENER_LIBROS------------------------------------
     def obtener_libros(self):
 
-        libro = self._abrir_archivo()
-        hoja = libro.active
+        libro, hoja = self._abrir_archivo()
         
         if hoja is None:
             return []
@@ -32,26 +99,54 @@ class BaseDeDatos:
                     {'codigo_libro': row[0], 'titulo': row[1], 'aho': row[2], 'tomo': row[3]})
         libro.close()
         return datos
-
-    #------------------------GUARDAR_LIBROS--------------------------------------
+    #------------------------GUARDAR_lIBROS--------------------------------------
     def guardar_libros(self, libros):
-        libro = self._abrir_archivo()
+        libro = openpyxl.load_workbook(self.archivo)
+        hoja = libro.active
 
-        if libro is None:
-            libro = Workbook()
-            hoja = libro.active
-            hoja.append(['codigo_libro', 'titulo', 'aho', 'tomo'])
-        else:
-            hoja = libro.active
-            
-        libro_obj= libro()
-        
+        # Asegúrate de que los encabezados estén en la primera fila
+        if hoja.cell(row=1, column=1).value is None:
+            hoja.append(['codigo_libro', 'titulo', 'ano', 'tomo', 'codigo_autor', 'nombre_autor', 'pais_autor', 'editorial_autor'])
+        libro_obj = Libro()
         for libro_obj in libros:
-            hoja.append([libro_obj.get_codigo_libro()['codigo_libro'], libro_data['titulo'], libro_data['aho'], libro_data['tomo']])
+            autor = libro_obj.mostrar_autor()
+            hoja.append([
+                libro_obj.get_codigo_libro(),
+                libro_obj.get_titulo(),
+                libro_obj.get_year(),
+                libro_obj.get_tomo(),
+                autor.get_codigo(),
+                autor.get_nombre(),
+                autor.get_pais(),
+                autor.get_editorial()
+            ])
 
-        libro.save(self.archivo)
+            libro.save(self.archivo)
+            libro.close()
+
+
+    #----------------------OBTENER-CATEGORIAS------------------------------------
+    def obtener_categorias(self):
+
+        libro, hoja = self._abrir_archivo()
+        if hoja is None:
+            return []
+        
+        datos = []
+        for row in hoja.iter_row(values_only=True):
+            if row[0] != 'cod_categoria':
+                datos.append({'cod_categoria': row[0], 'categoria': row[1]})
         libro.close()
+        return datos
 
+    # -----------------GUARDAR CATEGORIAS--------------------------------------
+    def guardar_categorias(self, categorias):
+        libro = Workbook()
+        hoja = libro.active
+        hoja.append(['cod_categoria', 'categoria'])
+        for categoria in categorias:
+            hoja.append([categoria.cod_categoria, categoria.categoria])
+        libro.save(self.archivo)
 
     # --------------------------OBTENER PERSONAS----------------------------------------------------
     def obtener_personas(self):
@@ -64,7 +159,7 @@ class BaseDeDatos:
         for row in hoja.iter_row(values_only=True):
             if row[0] != 'cod_persona':
                 datos.append({'cod_persona': row[0], 'nombre': row[1], 'apellidoPaterno': row[2],
-                            'apellidoMaterno': row[3], 'fecha_nacimieto': row[4]})
+                              'apellidoMaterno': row[3], 'fecha_nacimieto': row[4]})
         libro.close()
         return datos
 
@@ -73,219 +168,11 @@ class BaseDeDatos:
         libro = Workbook()
         hoja = libro.active
         hoja.append(['cod_persona', 'nombre', 'apellidoPaterno',
-                    'apellidoMaterno', 'fecha_nacimieto'])
+                     'apellidoMaterno', 'fecha_nacimieto'])
         for persona in personas:
             hoja.append([persona.cod_persona, persona.nombre, persona.apellidoPaterno,
-                        persona.apellidoMaterno, persona.fecha_nacimieto])
+                         persona.apellidoMaterno, persona.fecha_nacimieto])
         libro.save(self.archivo)
-    
-
-    #-----------ELIMINAR LIBROS-------------------------------------------
-    def eliminar_libro(self, codigo_libro):
-        libro = self._abrir_archivo()
-        hoja = libro.active
-        fila_a_eliminar = None
-        for row in hoja.iter_rows(values_only=True):
-            if row[0] == codigo_libro:
-                fila_a_eliminar = row
-                break
-
-        if fila_a_eliminar:
-            hoja.delete_rows(idx=fila_a_eliminar[0])
-            libro.save(self.archivo)
-            libro.close()
-
-
-    #----------------Editar libro-------------------------------------------
-    def editar_libro(self, codigo_libro, nuevo_titulo, nuevo_ano, nuevo_tomo):
-        libro, hoja = self._abrir_archivo()
-        fila_a_editar = None
-
-        for row in hoja.iter_rows(values_only=True):
-            if row[0] == codigo_libro:
-                fila_a_editar = row
-                break
-
-        if fila_a_editar:
-            # Actualiza los valores del libro
-            fila_a_editar[1] = nuevo_titulo
-            fila_a_editar[2] = nuevo_ano
-            fila_a_editar[3] = nuevo_tomo
-
-            # Guarda los cambios en el archivo
-            libro.save(self.archivo)
-            libro.close()
-            return True  # Libro encontrado y editado
-        else:
-            libro.close()
-            return False  # Libro no encontrado
-        
-    #-----------------BUSCAR LIBROS-------------------------------------------
-    def buscar_libro(self, codigo_libro):
-        libro, hoja = self._abrir_archivo()
-        fila_a_buscar = None
-        for row in hoja.iter_rows(values_only=True):
-            if row[0] == codigo_libro:
-                fila_a_buscar = row
-                break
-
-        if fila_a_buscar:
-            libro.close()
-            # Retorna la información del libro encontrado
-            return {
-                'codigo_libro': fila_a_buscar[0],
-                'titulo': fila_a_buscar[1],
-                'aho': fila_a_buscar[2],
-                'tomo': fila_a_buscar[3]
-            }
-        else:
-            libro.close()
-            return None
-        
-    ######################AUTORES GESTION #######################################
-
-
-#----------------AGREGAR AUTORES-----------------------------------------------------------
-    def agregar_autores(self, autores):
-        libro, hoja = self._abrir_archivo()
-        if hoja is None:
-            libro = Workbook()
-            hoja = libro.active
-            hoja.append(['codigo_autor', 'nombre', 'apellidoMaterno', 'apellidoPaterno', 'pais', 'editorial'])
-
-        for autor_data in autores:
-            hoja.append([autor_data['codigo_autor'], autor_data['nombre'], autor_data['apellidoMaterno'], autor_data['apellidoPaterno'], autor_data['pais'], autor_data['editorial']])
-
-        libro.save(self.archivo)
-        libro.close()
-
-#------------ASIGNAR UN AUTOR A UN LIBRO-------------------------------------------------
-    def asignar_autor_a_un_libro(self, codigo_libro, codigo_autor):
-        libro = self._abrir_archivo()
-        if libro is None:
-            libro = Workbook()
-        hoja = libro.active
-        if hoja is None:
-            hoja = libro.create_sheet(title='Libros')
-            hoja.append(['codigo_libro', 'codigo_autor'])
-
-        hoja.append([codigo_libro, codigo_autor])
-        libro.save(self.archivo)
-        libro.close()
-
-#---------------OBTENER AUTORES-------------------
-    def obtener_autores(self):
-        libro, hoja = self._abrir_archivo()
-        if hoja is None:
-            return []
-
-        datos = []
-        for row in hoja.iter_row(values_only=True):
-            if row[0] != 'codigo_autor':
-                datos.append({'codigo_autor': row[0], 'nombre': row[1], 'apellidoMaterno': row[2], 'apellidoPaterno': row[3], 'pais': row[4], 'editorial': row[5]})
-        libro.close()
-        return datos
-    
-#-----------------Eliminar AUTORES--------------------------------------
-    def eliminar_autor(self, codigo_autor):
-        libro, hoja= self._abrir_archivo()
-        fila_a_eliminar = None
-        for row in hoja.iter_rows(values_only=True):
-            if row[0] == codigo_autor:
-                fila_a_eliminar = row
-                break
-
-        if fila_a_eliminar:
-            hoja.delete_rows(hoja.index(fila_a_eliminar[0]))
-
-                # Guardar los cambios en el archivo
-            libro.save(self.archivo)
-            libro.close()
-
-#----------Editar AUTORES---------------------------------------------------
-    def editar_autores(self, codigo_autor, nuevo_nombre, nuevo_apellidoMaterno,nuevo_apellidoPaterno, nuevo_pais, nuevo_editorial):
-        libro, hoja = self._abrir_archivo()
-        fila_a_editar = None
-
-        for row in hoja.iter_rows(values_only=True):
-            if row[0] == codigo_autor:
-                fila_a_editar = row
-                break
-
-        if fila_a_editar:
-            # Actualiza los valores del libro
-            fila_a_editar[1] = nuevo_nombre
-            fila_a_editar[2] = nuevo_apellidoMaterno
-            fila_a_editar[3] = nuevo_apellidoPaterno
-            fila_a_editar[4] = nuevo_pais
-            fila_a_editar[5] = nuevo_editorial
-
-            # Guarda los cambios en el archivo
-            libro.save(self.archivo)
-            libro.close()
-            return True
-##############################GESTION CATEGORIA##################################################################
-
-
-    #----------------------OBTENER-CATEGORIAS------------------------------------
-    def obtener_categorias(self):
-        libro, hoja = self._abrir_archivo()
-        if hoja is None:
-            return []
-
-        datos = []
-        for row in hoja.iter_rows(values_only=True):
-            if row[0] != 'codigo_categoria':
-                datos.append({'codigo_categoria': row[0], 'categoria': row[1]})
-        libro.close()
-        return datos
-
-    # -----------------GUARDAR CATEGORIAS--------------------------------------
-    def guardar_categorias(self, categorias):
-        libro, hoja = self._abrir_archivo()
-        if hoja is None:
-            libro = Workbook()
-            hoja = libro.active
-            hoja.append(['cod_categoria', 'categoria'])
-
-        for categoria in categorias:
-            #Genera el codigo aleatorio de categoria antes de guardar el archivo
-            codigo_categoria = categoria.generar_codigo_categoria()
-            hoja.append([codigo_categoria, categoria.categoria])
-
-        libro.save(self.archivo)
-#----------------AGREGAR CATEGORIA-----------------------------------------------------------
-    def agregar_categorias(self, categorias):
-        libro, hoja = self._abrir_archivo()
-        if hoja is None:
-            libro = Workbook()
-            hoja = libro.active
-            hoja.append(['codigo_categoria', 'categoria'])
-
-        for categoria_data in categorias:
-            if not categoria_data.get('codigo_categoria'):
-                categoria = Categoria("", categoria_data['categoria'])
-                categoria.generar_codigo_categoria()
-                categoria_data['codigo_categoria'] = categoria.cod_categoria
-
-            hoja.append([categoria_data['codigo_categoria'], categoria_data['categoria']])
-
-        libro.save(self.archivo)
-        libro.close()
-
-
-#----------------------ASIGNAR CATEGORIAS A LIBRO-----------------------------------------
-    def asignar_categoria_a_un_libro(self, codigo_libro, codigo_categoria):
-        libro = self._abrir_archivo()
-        hoja = libro.active
-        if hoja is None:
-            hoja = libro.create_sheet(title='Libros')
-            hoja.append(['codigo_libro', 'codigo_categoria'])
-
-        hoja.append([codigo_libro, codigo_categoria])
-        libro.save(self.archivo)
-        libro.close()
-
 
     def cerrar(self):
         pass

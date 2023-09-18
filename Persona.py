@@ -1,42 +1,35 @@
-class Persona:
-    cod_persona = 0
-    nombre = ""
-    ap_paterno = ""
-    ap_materno = ""
-    fecha_nacimiento = ""
-
-    # constructor
-    def __init__(self, nombre, ap_paterno, ap_materno):
+class Persona():
+    def __init__(self,cod_persona,nombre, apellidoPaterno,apellidoMaterno, fecha_nacimieto):
+        self.cod_persona = cod_persona
         self.nombre = nombre
-        self.ap_paterno = ap_paterno
-        self.ap_materno = ap_materno
+        self.apellidoPaterno = apellidoPaterno
+        self.apellidoMaterno = apellidoMaterno
+        self.fecha_nacimieto = fecha_nacimieto
+    
+    def __str__(self) -> str:
+        return f"{self.cod_persona}, {self.nombre}, {self.apellidoPaterno} ,{self.apellidoMaterno} ,{self.fecha_nacimieto}"
 
+    #-------------IMPLEMENTACION DE GET Y SET-------------------
+
+    def get_cod_persona(self):
+        return self.cod_persona
+    def set_cod_persona(self, cod_persona):
+        self.cod_persona = cod_persona
 
     def get_nombre(self):
         return self.nombre
-
     def set_nombre(self, nombre):
         self.nombre = nombre
 
-    def get_ap_paterno(self):
-        return self.ap_paterno
+    def get_apellidoPaterno(self):
+        return self.apellidoPaterno
+    def set_apellidoPaterno(self,apellidoPaterno):
+        self.apellidoPaterno = apellidoPaterno
 
-    def set_ap_paterno(self, ap_paterno):
-        self.ap_paterno = ap_paterno
-
-    def get_ap_materno(self):
-        return self.ap_materno
-
-    def set_ap_materno(self, ap_materno):
-        self.ap_materno = ap_materno
-
-    def get_fecha_nacimiento(self):
-        return self.fecha_nacimiento
-
-    def set_fecha_nacimiento(self, fecha_nacimiento):
-        self.fecha_nacimiento = fecha_nacimiento
-
-    def imprimir(self):
-        Nombres = self.nombre
-        Apellidos = self.ap_paterno + ' ' + self.ap_materno
-        return f' {Nombres =},  {Apellidos =}'
+    def get_apellidoMaterno(self):
+        return self.apellidoMaterno
+    def set_apellidoMaterno(self,apellidoMaterno):
+        self.apellidoMaterno = apellidoMaterno
+        
+    def get_fecha_nacimieto(self):
+        return self.fecha_nacimieto
