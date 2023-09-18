@@ -1,54 +1,59 @@
 from _libro import Mantenimiento
-from Libro import Libro
-import pandas as pd
 from openpyxl import Workbook
+from base_de_datos import BaseDeDatos
 
-negocio_autor = Mantenimiento()
+negocio_libro = Mantenimiento()
+
+
+
 
 def registrar_libro():
-    titulo = input('Ingrese titulo: ')
-    year = input('Ingrese año: ')
-    tomo = input('Ingrese tomo: ')
-    nombre = input('Ingrese nombre: ')
-    ap_paterno = input('Ingrese ap_paterno: ')
-    ap_materno = input('Ingrese ap_materno: ')
-    fecha_nacimiento = input('Ingrese fecha_nacimiento: ')
-    pais = input('Ingrese pais: ')
-    editorial = input('Ingrese editorial: ')
-    categoria = input('Ingrese categoria: ')
-    negocio_autor.registrar_docente(titulo, year, tomo, nombre, ap_paterno, ap_materno, fecha_nacimiento, pais, editorial, categoria)
-    negocio_autor.guardar_docentes()
-    print(f'Registro exitoso del docente')
+    cod_libro = input('Ingrese código del libro: ')
+    titulo = input('Ingrese título del libro: ')
+    year = input('Ingrese año del libro: ')
+    tomo = input('Ingrese tomo del libro: ')
+    negocio_libro.agregar_libro(cod_libro, titulo, year, tomo)
+    print(f'Registro exitoso del libro')
 
-def obtener_docentes():
-    listado_docentes = docente_negocio.obtener_docentes()
-    for docente in listado_docentes:
-        print(docente.imprimir())
+def obtener_libros():
+    listado_libros = negocio_libro.obtener_libros()
+    for libro in listado_libros:
+        print(f'Código: {libro["codigo_libro"]}, Título: {libro["titulo"]}, Año: {libro["aho"]}, Tomo: {libro["tomo"]}')
 
-def editar_docente():
-    indice = int(input('Ingrese el índice del docente a editar: '))
-    nombre = input('Ingrese nombre: ')
-    ap_paterno = input('Ingrese ap_paterno: ')
-    ap_materno = input('Ingrese ap_materno: ')
-    dni = input('Ingrese dni: ')
-    codigo = input('Ingrese codigo: ')
-    facultad = input('Ingrese facultad: ')
-    print(docente_negocio.editar_docente(indice, nombre, ap_paterno, ap_materno, dni, codigo, facultad))
+def editar_libro():
+    codigo_libro = input('Ingrese el código del libro a editar: ')
+    nuevo_titulo = input('Ingrese el nuevo título del libro: ')
+    nuevo_ano = input('Ingrese el nuevo año del libro: ')
+    nuevo_tomo = input('Ingrese el nuevo tomo del libro: ')
+    
+    if negocio_libro.editar_libro(codigo_libro, nuevo_titulo, nuevo_ano, nuevo_tomo):
+        print(f'Libro con código {codigo_libro} editado correctamente.')
+    else:
+        print(f'No se encontró un libro con código {codigo_libro}.')
+
+def eliminar_libro():
+    codigo_libro = input('Ingrese el código del libro a eliminar: ')
+    if negocio_libro.eliminar_libro(codigo_libro):
+        print(f'Libro con código {codigo_libro} eliminado correctamente.')
+    else:
+        print(f'No se encontró un libro con código {codigo_libro}.')
 
 opciones = {
     "1": registrar_libro,
     "2": obtener_libros,
-    "3": editar_docente,
-    "4": exit
+    "3": editar_libro,
+    "4": eliminar_libro,
+    "5": exit
 }
 
 while True:
     print("##########################")
     print("Menú:")
-    print("1. Registrar docentes")
-    print("2. Listar docentes")
-    print("3. Editar docente")
-    print("4. Salir")
+    print("1. Registrar libro")
+    print("2. Listar libros")
+    print("3. Editar libro")
+    print("4. Eliminar libro")
+    print("5. Salir")
     print("##########################")
     
     seleccion = input("Seleccione una opción: ")
@@ -57,3 +62,4 @@ while True:
         opciones[seleccion]()
     else:
         print("Opción no válida. Por favor, seleccione una opción válida.")
+

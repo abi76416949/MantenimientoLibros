@@ -1,4 +1,3 @@
-
 from base_de_datos import BaseDeDatos
 class Mantenimiento():
 
@@ -8,17 +7,18 @@ class Mantenimiento():
 
 #------------------AGREGAR_LIBRO--------------------------------------------
 
-    def agregar_libro(self,cod_libroo, titulo, year, tomo ):
-        libros_a_guardar = [
-            {'codigo_libro': cod_libroo, 
-             'titulo': titulo,
-             'aho': year, 
-             'tomo': tomo}
-        ]
+    def agregar_libro(self, cod_libro, titulo, year, tomo):
+        # Crear un diccionario con los datos del libro
+        libro_nuevo = {'codigo_libro': cod_libro,
+                        'titulo': titulo,
+                        'aho': year,
+                        'tomo': tomo}
 
-        bd= BaseDeDatos('base.xls')
-        bd.guardar_libros(libros_a_guardar)
+        # Crear una instancia de la base de datos
+        bd = BaseDeDatos('base.xls')
 
+        # Llamar al método de la base de datos para guardar el libro
+        bd.guardar_libros([libro_nuevo])
 
     #------------------ELIMINAR_LIBRO--------------------------------------------
     def eliminar_libro(self, codigo_libro):
@@ -31,7 +31,6 @@ class Mantenimiento():
         bd = BaseDeDatos('base.xls')
         return bd.editar_libro(codigo_libro, nuevo_titulo, nuevo_ano, nuevo_tomo)
 
-       
     def generar_codigo_libro(self):
         self.codigo_libro = print("genera el codigo del libro")
         return self.codigo_libro

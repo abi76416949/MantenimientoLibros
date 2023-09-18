@@ -22,21 +22,29 @@ class BaseDeDatos:
             return []
 
         datos = []
-        for row in hoja.iter_row(values_only=True):
-            if row[0] != 'codigo_libro ':
+        for row in hoja.iter_rows(values_only=True):
+            if row[0] != 'codigo_libro':
                 datos.append(
                     {'codigo_libro': row[0], 'titulo': row[1], 'aho': row[2], 'tomo': row[3]})
         libro.close()
         return datos
-    #------------------------GUARDAR_lIBROS--------------------------------------
-    def guardar_libros(self, libros):
-        libro = Workbook()
-        hoja = libro.active
-        hoja.append(['codigo_libro', 'titulo', 'aho', 'tomo'])
-        for libro_data in libros:
-            hoja.append([libro_data['codigo_libro'], libro_data['titulo'], libro_data['aho'], libro_data['tomo']])        
-            libro.save(self.archivo)
 
+    #------------------------GUARDAR_LIBROS--------------------------------------
+    def guardar_libros(self, libros):
+        libro = self._abrir_archivo()
+
+        if libro is None:
+            libro = Workbook()
+            hoja = libro.active
+            hoja.append(['codigo_libro', 'titulo', 'aho', 'tomo'])
+        else:
+            hoja = libro.active
+
+        for libro_data in libros:
+            hoja.append([libro_data['codigo_libro'], libro_data['titulo'], libro_data['aho'], libro_data['tomo']])
+
+        libro.save(self.archivo)
+        libro.close()
 
     #----------------------OBTENER-CATEGORIAS------------------------------------
     def obtener_categorias(self):
