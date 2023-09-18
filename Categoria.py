@@ -1,6 +1,5 @@
 import random
 import string
-
 class Categoria():
     cod_categoria = ''
     categoria = ''

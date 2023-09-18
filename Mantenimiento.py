@@ -22,7 +22,7 @@ class Mantenimiento():
 ######################GENERAR UN CODIGO ALEATORIO PARA LIBRO Y CATEGORIA####################
     def generar_codigo_libro(self):
         #generamos un codigo de libro único asegurandonos que no se repita
-        codigo_libro = f'L{self.libro_counter: 004}'
+        codigo_libro = f'L{self.libro_counter:004}'
         self.libro_counter += 1
         self.guardar_contador()  # Guardar el valor actual del contador en el archivo
         
@@ -36,14 +36,14 @@ class Mantenimiento():
 
     def generar_codigo_categoria(self):
         #generamos un codigo de categoria único asegurandonos que no se repita
-        codigo_categoria = f'C{self.libro_categoria_counter: 004}'
+        codigo_categoria = f'C{self.libro_categoria_counter:004}'
         self.libro_categoria_counter += 1
         self.guardar_contador() 
         return codigo_categoria
     
     def generar_codigo_autor(self):
         #generamos un codigo de autor único asegurandonos que no se repita
-        codigo_autor = f'A{self.autor_counter: 004}'
+        codigo_autor = f'A{self.autor_counter:004}'
         self.autor_counter += 1
         self.guardar_contador() 
         return codigo_autor
@@ -165,7 +165,7 @@ class Mantenimiento():
     #------------------Asignar_categoria_a_libro------------------
     def asignar_categoria_a_libro(self, codigo_libro, codigo_categoria):
         bd = BaseDeDatos('base.xlsx')
-        bd.asignar_categoria_a_libro(codigo_libro, codigo_categoria)
+        bd.asignar_categoria_a_un_libro(codigo_libro, codigo_categoria)
     #---------------------OBTENER CATEGORIAS----------------------------
     def obtener_categorias(self):
         bd = BaseDeDatos('base.xls')

@@ -20,24 +20,6 @@ menuLibros = {
     '5' :'Buscar categoria ',
     '6' :'Salir '
 }
-def menuLibro():
-    while True:
-        print("\nMenú Principal:")
-        
-        # Itera sobre las opciones del menú y las muestra
-        for opcion, descripcion in menuLibros.items():
-            print(f"{opcion}. {descripcion}")
-
-        opcion = input("Seleccione una opción: ")
-
-        if opcion == "1":
-            codigo_categoria = str(mt.generar_codigo_categoria())
-            categoria = input("Ingrese la categoria: ")
-            mt.agregar_categoria(codigo_categoria,categoria)
-        elif opcion == "2":
-            break
-        else:
-            print("Opción no válida. Por favor, seleccione una opción válida.")
 
 def main():
     # Instancia a la clase Mantenimiento
@@ -58,15 +40,23 @@ def main():
             tomo = input("Ingrese el tomo del libro: ")
             mt.agregar_libro(codigo_libro,titulo,year,tomo)
 
-            categoria = input("Ingrese categoria del libro")
-            
-            codigo_categoria = str(mt.generar_codigo_categoria)
-            mt.agregar_categoria(codigo_categoria,categoria)
+            categoria= input(" ingrese categoria del libro ")
+
+            codigo_categoria = str(mt.generar_codigo_categoria())
+            mt.asignar_categoria_a_libro(codigo_categoria,categoria)
 
         elif opcion == "2":
-            codigo_libro = input("Ingrese el código del libro a eliminar: ")
-            mt.eliminar_libro(codigo_libro)
-            
+             while True:
+                codigo_libro = input("Ingrese el código del libro a eliminar: ")
+                try:
+                    if mt.eliminar_libro(codigo_libro):
+                        print("Libro eliminado con éxito.")
+                        break
+                    else:
+                        print("El código del libro no existe. Intente nuevamente.")
+                except Exception as e:
+                    print(f"Ocurrió un error al eliminar el libro: {e}")
+                    
 
         elif opcion == "3":
             codigo_libro = input("Ingrese el código del libro a editar: ")
