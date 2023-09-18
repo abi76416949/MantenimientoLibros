@@ -28,7 +28,7 @@ def main():
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
-            codigo_libro = mt.generar_codigo_libro()
+            codigo_libro = str(mt.generar_codigo_libro())
             titulo = input("Ingrese el título del libro: ")
             year = input("Ingrese el año del libro: ")
             tomo = input("Ingrese el tomo del libro: ")

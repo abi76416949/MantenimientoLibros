@@ -11,11 +11,13 @@ class Mantenimiento():
         self.autores_eliminados= []
         self.categorias_eliminadas = []
         pass
+    
 ######################GENERAR UN CODIGO ALEATORIO PARA LIBRO Y CATEGORIA####################
     def generar_codigo_libro(self):
         #generamos un codigo de libro único asegurandonos que no se repita
         codigo_libro = f'L{self.libro_counter: 004}'
         self.libro_counter += 1
+        print(codigo_libro)
         return codigo_libro 
 
     def generar_codigo_categoria(self):
@@ -151,3 +153,6 @@ class Mantenimiento():
     def obtener_categorias(self):
         bd = BaseDeDatos('base.xls')
         return bd.obtener_categorias()
+
+md = Mantenimiento()
+md.generar_codigo_libro()
