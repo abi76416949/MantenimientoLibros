@@ -48,7 +48,7 @@ class Mantenimiento():
         #guardamos los codigos de libros eliminados para una retulizacion de codigos
         self.libros_eliminados.append(codigo_libro)
 
-        bd = BaseDeDatos('base.xls')
+        bd = BaseDeDatos('base.xlsx')
         return bd.eliminar_libro(codigo_libro)
         
         
