@@ -242,7 +242,36 @@ class BaseDeDatos:
             libro.save(self.archivo)
             libro.close()
             return True
-    
+##############################GESTION CATEGORIA##################################################################
+
+
+#----------------AGREGAR CATEGORIA-----------------------------------------------------------
+    def agregar_categorias(self, categorias):
+        libro, hoja = self._abrir_archivo()
+        if hoja is None:
+            libro = Workbook()
+            hoja = libro.active
+            hoja.append(['codigo_categoria', 'categoria'])
+
+        for categoria_data in categorias:
+            hoja.append([categoria_data['codigo_categoria'], categoria_data['categoria']])
+
+        libro.save(self.archivo)
+        libro.close()
+
+#----------------------ASIGNAR CATEGORIAS A LIBRO-----------------------------------------
+    def asignar_categoria_a_un_libro(self,codigo_libro, codigo_categoria):
+        libro, hoja = self._abrir_archivo()
+        if hoja is None:
+            libro = Workbook()
+            hoja = libro.active
+            hoja.append(['codigo_libro', 'codigo_categoria'])
+
+        hoja.append([codigo_libro, codigo_categoria])
+        libro.save(self.archivo)
+        libro.close()
+
+
     def cerrar(self):
         pass
     
