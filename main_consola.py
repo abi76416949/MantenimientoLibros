@@ -11,7 +11,11 @@ menu = {
 
 menuLibros = {
     '1' :'Agregar categoria '
-
+    '2' :'Eliminar categoria '
+    '3' :'Editar categoria '
+    '4' :'Listar categoria '
+    '5' :'Buscar categoria '
+    '6' :'Salir '
 }
 
 def main():
