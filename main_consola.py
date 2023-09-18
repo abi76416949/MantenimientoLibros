@@ -6,15 +6,16 @@ menu = {
     '3': 'Editar Libro',
     '4': 'Listar Libros',
     '5': 'Buscar Libro',
-    '6': 'Salir'
+    '6': 'Informe de Libros',
+    '7': 'Salir'
 }
 
 menuLibros = {
-    '1' :'Agregar categoria '
-    '2' :'Eliminar categoria '
-    '3' :'Editar categoria '
-    '4' :'Listar categoria '
-    '5' :'Buscar categoria '
+    '1' :'Agregar categoria ',
+    '2' :'Eliminar categoria ',
+    '3' :'Editar categoria ',
+    '4' :'Listar categoria ',
+    '5' :'Buscar categoria ',
     '6' :'Salir '
 }
 
@@ -62,8 +63,12 @@ def main():
             libro = mt.buscar_libro(codigo_libro)
             print(f"Código: {libro['codigo_libro']}, Título: {libro['titulo']}, Año: {libro['aho']}, Tomo: {libro['tomo']}")
             
-
         elif opcion == "6":
+        #informe de libros
+            listado_libros = mt.obtener_libros()
+            mt.generar_informe_libros(listado_libros)
+        
+        elif opcion == "7":
             print("¡Hasta luego!")
             break
 
