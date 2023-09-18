@@ -1,4 +1,5 @@
 from base_de_datos import BaseDeDatos
+import datetime
 
 class Mantenimiento():
 
@@ -69,6 +70,31 @@ class Mantenimiento():
         bd = BaseDeDatos('base.xlsx')
         return bd.buscar_libro(codigo_libro)
     
+#-----------------------GENERAR INFORME DE LIBROS-----------------------------------------
+    def generar_informe_libros(self, libros):
+    # Obtener la fecha actual
+        fecha_actual = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # Crear el nombre del archivo de informe usando la fecha
+        nombre_archivo = f"reporte_{fecha_actual}.txt"
+
+        try:
+            with open(nombre_archivo, "w", encoding="utf-8") as archivo:
+                # Escribir el encabezado del informe con la fecha
+                archivo.write(f"Informe de Libros - {fecha_actual}\n\n")
+
+                # Recorrer la lista de libros y escribir la información de cada libro
+                for libro in libros:
+                    archivo.write(f"Código: {libro['codigo_libro']}\n")
+                    archivo.write(f"Título: {libro['titulo']}\n")
+                    archivo.write(f"Año de Publicación: {libro['aho']}\n")
+                    archivo.write(f"Tomo: {libro['tomo']}\n")
+                    archivo.write("\n")  # Separador entre libros
+
+            print(f"Informe de libros generado y guardado en '{nombre_archivo}'.")
+
+        except Exception as e:
+            print(f"Error al generar el informe: {str(e)}")
     ################################AUTOR#####################################
     def agregar_autor(self, codigo_autor, nombre, apellido):
         codigo_autor = self.generar_codigo_autor()
@@ -123,5 +149,5 @@ class Mantenimiento():
         bd.asignar_categoria_a_libro(codigo_libro, codigo_categoria)
     #---------------------OBTENER CATEGORIAS----------------------------
     def obtener_categorias(self):
-        bd = BaseDeDatos('base.xlsx')
+        bd = BaseDeDatos('base.xls')
         return bd.obtener_categorias()

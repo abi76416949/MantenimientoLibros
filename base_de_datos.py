@@ -278,4 +278,3 @@ class BaseDeDatos:
 
     def cerrar(self):
         pass
-    
