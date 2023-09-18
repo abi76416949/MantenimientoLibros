@@ -156,3 +156,5 @@ class Mantenimiento():
 
 md = Mantenimiento()
 md.generar_codigo_libro()
+#agregar libro
+md.agregar_libro('L001', 'Python', '2020', '1')

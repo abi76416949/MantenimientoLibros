@@ -1,4 +1,4 @@
-from Mantenimiento import Mantenimiento
+from mantenimiento import Mantenimiento
 
 
 menu = {
@@ -17,7 +17,7 @@ menuLibros = {
 
 def main():
     # Instancia a la clase Mantenimiento
-    mt = Mantenimiento 
+    mt = Mantenimiento()
     while True:
         print("\nMenú Principal:")
         
