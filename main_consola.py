@@ -1,6 +1,8 @@
 from mantenimiento import Mantenimiento
 
 
+mt = Mantenimiento()
+
 menu = {
     '1': 'Agregar Libro',
     '2': 'Eliminar Libro',
@@ -11,13 +13,32 @@ menu = {
 }
 
 menuLibros = {
-    '1' :'Agregar categoria '
+    '1' :'Agregar categoria al libro ',
+    '2' :'Regresar al menú principal'
 
 }
+def menuLibro():
+    while True:
+        print("\nMenú Principal:")
+        
+        # Itera sobre las opciones del menú y las muestra
+        for opcion, descripcion in menuLibros.items():
+            print(f"{opcion}. {descripcion}")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            codigo_categoria = str(mt.generar_codigo_categoria())
+            categoria = input("Ingrese la categoria: ")
+            mt.agregar_categoria(codigo_categoria,categoria)
+        elif opcion == "2":
+            break
+        else:
+            print("Opción no válida. Por favor, seleccione una opción válida.")
 
 def main():
     # Instancia a la clase Mantenimiento
-    mt = Mantenimiento()
+    
     while True:
         print("\nMenú Principal:")
         
@@ -33,7 +54,13 @@ def main():
             year = input("Ingrese el año del libro: ")
             tomo = input("Ingrese el tomo del libro: ")
             mt.agregar_libro(codigo_libro,titulo,year,tomo)
-
+            while True:
+                # Aquí ingresamos al submenú de libros
+                menuLibro()
+                subopcion = input("¿Desea realizar otra acción en libros? (S/N): ").strip().lower()
+                for opcion, descripcion in menuLibro.intems()
+                if subopcion != "s":
+                    break
         elif opcion == "2":
             codigo_libro = input("Ingrese el código del libro a eliminar: ")
             mt.eliminar_libro(codigo_libro)
