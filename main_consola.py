@@ -1,4 +1,4 @@
-from Mantenimiento import Mantenimiento
+from mantenimiento import Mantenimiento
 
 menu = {
     '1': 'Agregar Libro',
@@ -10,13 +10,13 @@ menu = {
 }
 
 menuLibros = {
-    '1' 'Agregar categoria '
+    '1' :'Agregar categoria '
 
 }
 
 def main():
     # Instancia a la clase Mantenimiento
-    mt = Mantenimiento 
+    mt = Mantenimiento()
     while True:
         print("\nMenú Principal:")
         
@@ -27,7 +27,7 @@ def main():
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
-            codigo_libro = 1
+            codigo_libro = str(mt.generar_codigo_libro())
             titulo = input("Ingrese el título del libro: ")
             year = input("Ingrese el año del libro: ")
             tomo = input("Ingrese el tomo del libro: ")

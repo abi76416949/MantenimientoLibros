@@ -1,4 +1,4 @@
-from Mantenimiento import Mantenimiento
+from mantenimiento import Mantenimiento
 from base_de_datos import BaseDeDatos
 from openpyxl import load_workbook
 
