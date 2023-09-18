@@ -46,6 +46,7 @@ class Mantenimiento():
         # Llamar al método de la base de datos para guardar el libro
         bd.guardar_libros([libro_nuevo])
 
+    print("Libro agregado correctamente")
     #------------------ELIMINAR_LIBRO--------------------------------------------
     def eliminar_libro(self, codigo_libro):
         #guardamos los codigos de libros eliminados para una retulizacion de codigos
@@ -76,7 +77,7 @@ class Mantenimiento():
     
 #-----------------------GENERAR INFORME DE LIBROS-----------------------------------------
     def generar_informe_libros(self, libros):
-    # Obtener la fecha actual
+        # Obtener la fecha actual
         fecha_actual = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Crear el nombre del archivo de informe usando la fecha
@@ -99,7 +100,7 @@ class Mantenimiento():
 
         except Exception as e:
             print(f"Error al generar el informe: {str(e)}")
-    ################################AUTOR#####################################
+################################AUTOR#####################################
     def agregar_autor(self, codigo_autor, nombre, apellido):
         codigo_autor = self.generar_codigo_autor()
         autores_a_guardar = [
@@ -155,3 +156,10 @@ class Mantenimiento():
     def obtener_categorias(self):
         bd = BaseDeDatos('base.xls')
         return bd.obtener_categorias()
+
+def main():
+    md = Mantenimiento()
+    md.agregar_libro('L0001', 'El señor de los anillos', 1954, 1)
+
+if __name__ == "__main__":
+    main()
