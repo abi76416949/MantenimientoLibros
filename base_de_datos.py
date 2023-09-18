@@ -13,6 +13,7 @@ class BaseDeDatos:
             return libro
         except FileNotFoundError:
             return None
+        
     #---------------------------OBTENER_LIBROS------------------------------------
     def obtener_libros(self):
 
@@ -92,6 +93,7 @@ class BaseDeDatos:
             hoja.append([persona.cod_persona, persona.nombre, persona.apellidoPaterno,
                         persona.apellidoMaterno, persona.fecha_nacimieto])
         libro.save(self.archivo)
+
    #---------- AAGREGAR CATEGORIAS--------------------------------------
     def agregar_categorias(self):
         self.cod_categoria = input(print("agrega el codi de la categoria"))
@@ -114,6 +116,8 @@ class BaseDeDatos:
                 # Guardar los cambios en el archivo
             libro.save(self.archivo)
             libro.close()
+
+
     #----------------Editar libro-------------------------------------------
     def editar_libro(self, codigo_libro, nuevo_titulo, nuevo_ano, nuevo_tomo):
         libro, hoja = self._abrir_archivo()
@@ -137,5 +141,28 @@ class BaseDeDatos:
         else:
             libro.close()
             return False  # Libro no encontrado
+        
+    #-----------------BUSCAR LIBROS-------------------------------------------
+    def buscar_libro(self, codigo_libro):
+        libro, hoja = self._abrir_archivo()
+        fila_a_buscar = None
+        for row in hoja.iter_rows(values_only=True):
+            if row[0] == codigo_libro:
+                fila_a_buscar = row
+                break
+
+        if fila_a_buscar:
+            libro.close()
+            # Retorna la información del libro encontrado
+            return {
+                'codigo_libro': fila_a_buscar[0],
+                'titulo': fila_a_buscar[1],
+                'aho': fila_a_buscar[2],
+                'tomo': fila_a_buscar[3]
+            }
+        else:
+            libro.close()
+            return None
+
     def cerrar(self):
         pass

@@ -1,4 +1,4 @@
-from _libro import libro
+
 from base_de_datos import BaseDeDatos
 class Mantenimiento():
 
@@ -35,5 +35,16 @@ class Mantenimiento():
     def generar_codigo_libro(self):
         self.codigo_libro = print("genera el codigo del libro")
         return self.codigo_libro
-    
+    #---------------OBTENER LIBROS -------------------------------------------------
 
+    def obtener_libros(self):
+        bd = BaseDeDatos('base.xls')
+        return bd.obtener_libros()
+    
+    #-----------------BUSCAR LIBROS-----------------------------------------------------------
+    def buscar_libro(self, codigo_libro):
+        bd = BaseDeDatos('base.xls')
+        return bd.buscar_libro(codigo_libro)
+    
+    ################################Autor#####################################
+    
