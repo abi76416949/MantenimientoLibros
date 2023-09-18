@@ -20,25 +20,29 @@ def registrar_libro():
     negocio_autor.guardar_docentes()
     print(f'Registro exitoso del docente')
 
-def obtener_docentes():
-    listado_docentes = docente_negocio.obtener_docentes()
-    for docente in listado_docentes:
+def obtener_libro():
+    listado_autor = negocio_autor.obtener_autor()
+    for docente in listado_autor:
         print(docente.imprimir())
 
-def editar_docente():
+def editar_libro():
     indice = int(input('Ingrese el índice del docente a editar: '))
+    titulo = input('Ingrese titulo: ')
+    year = input('Ingrese año: ')
+    tomo = input('Ingrese tomo: ')
     nombre = input('Ingrese nombre: ')
     ap_paterno = input('Ingrese ap_paterno: ')
     ap_materno = input('Ingrese ap_materno: ')
-    dni = input('Ingrese dni: ')
-    codigo = input('Ingrese codigo: ')
-    facultad = input('Ingrese facultad: ')
-    print(docente_negocio.editar_docente(indice, nombre, ap_paterno, ap_materno, dni, codigo, facultad))
+    fecha_nacimiento = input('Ingrese fecha_nacimiento: ')
+    pais = input('Ingrese pais: ')
+    editorial = input('Ingrese editorial: ')
+    categoria = input('Ingrese categoria: ')
+    print(negocio_autor.editar_docente(indice, titulo, year, tomo, nombre, ap_paterno, ap_materno, fecha_nacimiento, pais, editorial, categoria))
 
 opciones = {
     "1": registrar_libro,
-    "2": obtener_libros,
-    "3": editar_docente,
+    "2": obtener_libro,
+    "3": editar_libro,
     "4": exit
 }
 
